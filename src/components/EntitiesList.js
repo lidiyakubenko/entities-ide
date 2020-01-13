@@ -6,11 +6,7 @@ import Entity from './Entity'
 
 const EntitiesList = ({ entities, entityNames }) => {
     return entityNames.map(name => (
-        <Entity
-            key={name}
-            entityName={name}
-            entityFields={entities[name]}
-        />
+        <Entity key={name} entityName={name} entityFields={entities[name]} />
     ))
 }
 

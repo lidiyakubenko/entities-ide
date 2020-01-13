@@ -10,7 +10,7 @@ const Entity = ({ entityName, entityFields }) => {
     const { createNewField } = React.useContext(ThemeContext)
 
     const handleChangeEmptyInput = e => {
-        createNewField({ e, entityName, nextNumber: entityFields.length + 1})
+        createNewField({ e, entityName, nextNumber: entityFields.length + 1 })
         setEmptyField('')
     }
 
@@ -21,8 +21,8 @@ const Entity = ({ entityName, entityFields }) => {
                 <Name>{entityName}</Name>
                 <BraceTop>{`{`}</BraceTop>
             </NameWrap>
-            {entityFields.map((field,index) => (
-                <div key={field}>
+            {entityFields.map((field, index) => (
+                <div key={index}>
                     <FieldWrap>
                         <FieldInputs
                             entityName={entityName}
@@ -31,21 +31,16 @@ const Entity = ({ entityName, entityFields }) => {
                         />
                         <SubBraceTop>{`{`}</SubBraceTop>
                     </FieldWrap>
-
                     <SubBraceBottom>{`}`}</SubBraceBottom>
                 </div>
             ))}
-            <Input
-                value={emptyField}
-                onChange={handleChangeEmptyInput}
-            />
+            <Input value={emptyField} onChange={handleChangeEmptyInput} />
             <BraceBottom>{`}`}</BraceBottom>
         </WrapperObj>
     )
 }
 
 Entity.propTypes = {
-    entity: PropTypes.object.isRequired,
     entityName: PropTypes.string.isRequired,
     entityFields: PropTypes.array.isRequired,
 }

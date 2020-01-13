@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import AutosizeInput from 'react-input-autosize'
 import { ThemeContext } from './App'
 
-const FieldInputs = ({  entityName,field, index }) => {
+const FieldInputs = ({ entityName, field, index }) => {
     const { handleChangeFieldName } = React.useContext(ThemeContext)
 
     return (
