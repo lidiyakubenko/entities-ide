@@ -1,11 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import FieldInputs from './FieldInputs'
-import { Input } from './EntitiesList'
 import { ThemeContext } from './App'
+import JSONInput from 'react-json-editor-ajrm'
 
 const Entity = ({ entityName, entityFields }) => {
+    const [jsonHeight, setJsonHeight] = React.useState(100)
     const [emptyField, setEmptyField] = React.useState('')
     const { createNewField } = React.useContext(ThemeContext)
 
@@ -14,28 +15,47 @@ const Entity = ({ entityName, entityFields }) => {
         setEmptyField('')
     }
 
+    const handleChange = e => {
+        console.log(e)
+    }
+
     return (
         <WrapperObj>
             <NameWrap>
                 <Kind>object</Kind>
                 <Name>{entityName}</Name>
-                <BraceTop>{`{`}</BraceTop>
+                <BraceTop>{'{'}</BraceTop>
             </NameWrap>
             {entityFields.map((field, index) => (
                 <div key={index}>
-                    <FieldWrap>
-                        <FieldInputs
-                            entityName={entityName}
-                            index={index}
-                            field={field}
+                    <FieldInputs
+                        entityName={entityName}
+                        index={index}
+                        field={field}
+                    />
+                    <WrapperJSON>
+                        <JSONInput
+                            confirmGood={false}
+                            id="entity-attributes"
+                            height={jsonHeight}
+                            width="100%"
+                            onChange={handleChange}
+                            placeholder={{ type: '' }}
+                            style={{
+                                labelColumn: { color: 'red' },
+                                warningBox: { display: 'none' },
+                                body: { height: '100%' },
+                            }}
                         />
-                        <SubBraceTop>{`{`}</SubBraceTop>
-                    </FieldWrap>
-                    <SubBraceBottom>{`}`}</SubBraceBottom>
+                    </WrapperJSON>
                 </div>
             ))}
-            <Input value={emptyField} onChange={handleChangeEmptyInput} />
-            <BraceBottom>{`}`}</BraceBottom>
+            <Input
+                placeholder="..."
+                value={emptyField}
+                onChange={handleChangeEmptyInput}
+            />
+            <BraceBottom>{'}'}</BraceBottom>
         </WrapperObj>
     )
 }
@@ -79,12 +99,16 @@ const BraceBottom = styled.div`
     padding-top: 10px;
     font-weight: 600;
 `
+const Input = styled.input`
+    margin-top: 5px;
+    outline: none;
+    width: 100%;
+    font: 300 18px sans-serif;
 
-const FieldWrap = styled.div`
-    padding-left: 24px;
-    padding-bottom: 8px;
-    display: flex;
-    align-items: flex-end;
+    ::placeholder {
+        margin-left: 15px;
+        color: red;
+    }
 `
 
 const SubBraceTop = styled.div`
@@ -96,9 +120,6 @@ const SubBraceBottom = styled.div`
     padding-top: 8px;
     padding-left: 24px;
 `
-
-const Attribute = styled.div`
-    padding-left: 36px;
-`
+const WrapperJSON = styled.div``
 
 export default Entity
